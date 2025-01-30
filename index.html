@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso MT PRO4.1 CAR Vapor ACLF</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #121212, #1e1e1e);
+            color: white;
+            margin: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+        h1 {
+            padding: 20px;
+            font-size: 2.5rem;
+            margin-top: 60px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .curso {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s;
+        }
+        .curso:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+        .curso img {
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .curso h2 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        .curso a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+            background: #ff0000;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        .curso a:hover {
+            background: #cc0000;
+        }
+        #modoDark {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background: white;
+            color: black;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+        #modoDark.dark {
+            background: black;
+            color: white;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            max-width: 90%;
+        }
+        .modal-content iframe {
+            width: 100%;
+            height: 315px;
+            max-width: 560px;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #1e1e1e;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+        .nav input {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: none;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff0000;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+        }
+        .back-to-top.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <input type="text" id="search" placeholder="Buscar por número ou título...">
+    </div>
+    <button id="modoDark">Modo Escuro</button>
+    <h1>Curso MT PRO4.1 CAR.Vapor ACLF</h1>
+    <div class="container"></div>
+
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="videoFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        const cursos = [
+            {numero: 0, titulo: "Baixar, instalar e conhecer o MT Pro4.1", videoId: "rZ-hYqE3A2E"},
+            {numero: 1, titulo: "Como configurar as Pinças no MT Pro em AV KV", videoId: "aoVmgDSgr5Q"},
+            {numero: 2, titulo: "Script CKP IG1", videoId: "4bR-Epcv_1A"},
+            {numero: 3, titulo: "Script CKP CMP IG1", videoId: "8AR7pw6Cvbo"},
+            {numero: 4, titulo: "Injetor na Partida, Alimentação e Pulso", videoId: "91OBcE9PjeM"},
+            {numero: 5, titulo: "Análise Elétrica dos injetores", videoId: "SacHC2dTXPk"},
+            {numero: 6, titulo: "Sistema de Ignição DIS Completo", videoId: "sUqlBVijNEk"},
+            {numero: 7, titulo: "Transdutor de Compressão, Gases e Sincronismo", videoId: "5BYuGqJogE0"},
+            {numero: 8, titulo: "Aula Sobre o TVE", videoId: "zUqgLywPIbs"},
+            {numero: 9, titulo: "MT Pro Análise no TVC", videoId: "m2qSf49hysk"},
+            {numero: 10, titulo: "MT Pro Análise do TVA", videoId: "WmkMGH0BVik"},
+            {numero: 11, titulo: "PDS/VS no trilho de Combustível", videoId: "SVTgGzlh82U"},
+            {numero: 12, titulo: "Alternador Pilotado, monitoramento na partida", videoId: "8hQxilxTjMA"},
+            {numero: 13, titulo: "MT Pro VS no Trilho de Combustível Análise", videoId: "t7_DSqXZFnU"},
+            {numero: 14, titulo: "Sensor ABS", videoId: "V0Tn-UMF98c"},
+            {numero: 15, titulo: "Leituras na TBI", videoId: "LFmPH6JMFx8"},
+            {numero: 16, titulo: "Pedal eletrônico Acelerador", videoId: "Aw-X85gBq7M"},
+            {numero: 17, titulo: "Rede CAN", videoId: "nPCis6mVTYg"},
+            {numero: 18, titulo: "Teste Bateria com CC650", videoId: "5c8XkBqfpGc"},
+            {numero: 19, titulo: "Sonda Lambda Salvara a Configuração", videoId: "1kBJHXJGd5E"},
+            {numero: 20, titulo: "Teste do Aterramento DDP", videoId: "jSvrmmB7jTY"},
+            {numero: 21, titulo: "CC-65 na Bomba de Combustível", videoId: "YVr6hSPaNAA"},
+            {numero: 22, titulo: "Sonda Lambda de 1V e PWM", videoId: "yL7Vrrfg-f8"},
+            {numero: 23, titulo: "CR Compressão Relativa Com Trigger", videoId: "VrfFbz00EZg"},
+            {numero: 24, titulo: "TVA na LENTA e ACELERAÇÃO", videoId: "OHPJ5UlydFs"},
+            {numero: 25, titulo: "CC65 no Injetor", videoId: "AQY-dJyJuVA"},
+            {numero: 26, titulo: "Bobina com CC65", videoId: "7MrqygkJq1E"},
+            {numero: 27, titulo: "COP com sistam Dis (Centelha Perdida)", videoId: "PBvz6yS1Prk"},
+            {numero: 28, titulo: "Ordem de ignição Motor 3 cilindros", videoId: "TsV101qQFFg"},
+            {numero: 29, titulo: "Análise Bobinas COP Motor 3 cilindros", videoId: "g--Ua03ADDc"},
+            {numero: 30, titulo: "Script PX com Variador de Avanço", videoId: "m5dcBfWic4g"},
+            {numero: 31, titulo: "Função Trigger no MT Pro", videoId: "fbZHWScPD8U"},
+            {numero: 32, titulo: "Salvar leituras para aplicar depois", videoId: "oDYCgvmu3zs"},
+            {numero: 33, titulo: "Editar e Salvar banco de dados no PAINT", videoId: "0VIxhpkcRSg"},
+            {numero: 34, titulo: "TVA na Partida sem IPC (Trigger)", videoId: "rccCZk6x8hk"},
+            {numero: 35, titulo: "Novas funções Script Atualizado", videoId: "1fxUqkLR4Vk"},
+            {numero: 36, titulo: "Alternador Controlado por PWM", videoId: "mbG0Wmla19E"},
+            {numero: 37, titulo: "Criando Referência para Comparação", videoId: "DxPuNGU4V6A"},
+            {numero: 38, titulo: "Configurar e salvar uma pinça", videoId: "2wRmJjoZGE0"}
+        ];
+        
+        const container = document.querySelector('.container');
+        const searchInput = document.getElementById('search');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        function renderCursos(filter = '') {
+            container.innerHTML = '';
+            cursos.filter(curso => {
+                const searchTerm = filter.toLowerCase();
+                // Busca pelo número ou pelo título
+                return curso.numero.toString().includes(searchTerm) || curso.titulo.toLowerCase().includes(searchTerm);
+            }).forEach(curso => {
+                const cursoDiv = document.createElement('div');
+                cursoDiv.classList.add('curso');
+                cursoDiv.innerHTML = `
+                    <img src="https://img.youtube.com/vi/${curso.videoId}/0.jpg" alt="${curso.titulo}" onclick="abrirVideo('${curso.videoId}')">
+                    <h2>Aula ${curso.numero}: ${curso.titulo}</h2>
+                    <a href="https://www.youtube.com/watch?v=${curso.videoId}" target="_blank">
+                        <i class="fas fa-play"></i> Assistir no YouTube
+                    </a>
+                `;
+                container.appendChild(cursoDiv);
+            });
+        }
+
+        renderCursos();
+
+        searchInput.addEventListener('input', () => {
+            renderCursos(searchInput.value);
+        });
+
+        const modoDarkBtn = document.getElementById("modoDark");
+        modoDarkBtn.addEventListener("click", () => {
+            document.body.classList.toggle("dark");
+            modoDarkBtn.classList.toggle("dark");
+        });
+        
+        const modal = document.getElementById("videoModal");
+        const videoFrame = document.getElementById("videoFrame");
+        const closeBtn = document.querySelector(".close");
+        
+        function abrirVideo(videoId) {
+            videoFrame.src = `https://www.youtube.com/embed/${videoId}`;
+            modal.style.display = "flex";
+        }
+        
+        closeBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+            videoFrame.src = "";
+        });
+        
+        window.onclick = (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                videoFrame.src = "";
+            }
+        };
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
